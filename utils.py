@@ -2,7 +2,7 @@ from processing.input_processor import WebCamInput, LocalFSInput
 from processing.commands.gender_detection import GenderIdentification
 from processing.output_processor import ImageOutput
 """
-Parse string key to processor implementation
+Parse string key to input implementation
 """
 def resolve_input(input):
 	if input:
