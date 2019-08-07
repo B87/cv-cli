@@ -44,7 +44,7 @@ class LocalFSInput(Input):
 			for r, d, f in os.walk(self.path):
 				for filename in f:
 					if filename.endswith('.' + 'jpg'):
-						images.append(wait_for_frame(cv2.VideoCapture(self.path)))
-			return(images)
+						images.append(cv2.imread((self.path)))
+			return images
 		else:
-			return [wait_for_frame(cv2.VideoCapture(self.path))]
+			return [cv2.imread((self.path))]
