@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import time
 
-from processing.commands.base import BaseCommand
+from models import BaseCommand, ImageResult, ImageBox
 
 def getFaceBox(net, frame, conf_threshold=0.7):
 		frameOpencvDnn = frame.copy()
@@ -39,7 +39,9 @@ class GenderIdentification(BaseCommand):
 	#	'data/models/gender_net.caffemodel')
 	
 
-	def processImage(self, image):
+	def processImage(self, image) -> ImageResult:
+		image_boxes []
+		cv2.imshow('', image)
 		frameFace, bboxes = getFaceBox(self.face_net, image)
 		if not bboxes:
 			print("No face Detected, Checking next frame")
@@ -50,10 +52,14 @@ class GenderIdentification(BaseCommand):
 			self.gender_net.setInput(blob)
 			gender_preds = self.gender_net.forward()
 			gender = self.gender_list[genderPreds[0].argmax()]
+
+			image_boxes.append(ImageBox(bbox[0], bbox[1], bbox[2], bbox[3], [gender]))
+
 			print("Gender : {}, conf = {:.3f}".format(gender, gender_preds[0].max()))
 			label = "{}".format(gender)
 			cv2.putText(frame_face, label, (bbox[0], bbox[1]-10), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2, cv2.LINE_AA)
 			cv2.imshow("Age Gender Demo", frame_face)
+		return ImageResult(image, image_boxes)
 
 		# Convert from rgb to grey scaled image		
 		#gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

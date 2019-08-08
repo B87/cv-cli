@@ -1,20 +1,7 @@
-from abc import ABC, abstractmethod 
-
 import cv2
 import os
 
-class Input(ABC):
-
-	def __init__(self): 
-		pass
-		
-	"""
-	Returns a list of images to process as a numpy array / cv2 image
-	"""
-	@abstractmethod
-	def getImages(self):
-		pass
-
+from models import Input
 
 def wait_for_frame(capture):
 	# TODO : Put a timeout
