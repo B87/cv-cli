@@ -26,7 +26,7 @@ And some pip dependencies, execute pipenv install
 
 # Usage
 
-	python cv-cli.py --command gender-detection \
+	pipenv python cv-cli.py --command gender-detection \
 		--input $(pwd)/data/images/woman_frontal.jpg
 
 
