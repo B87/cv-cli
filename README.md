@@ -1,4 +1,4 @@
-# cv-cli
+## cv-cli
 
 cv-cli is a project made to encapsulate computer vision algorithms in a simple cli for fun pourposes.
 
@@ -30,10 +30,15 @@ And some pip dependencies, execute pipenv install
 		--input $(pwd)/data/images/woman_frontal.jpg
 
 
+## Developing 
+
 # Testing
 
-Execute tests with the following command from any dir inside the project.
+Execute tests with the following command from root project dir.
 
 	pipenv run python -m pytest 
 
 Pytest will execute all tests inside modules matching the regular expression [Tt]est[-_]*.
+
+# Git flow
+

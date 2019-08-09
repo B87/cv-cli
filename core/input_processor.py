@@ -1,7 +1,17 @@
 import cv2
 import os
 
-from models import Input
+from abc import ABC, abstractmethod
+
+"""
+	Input proceessor base class
+"""
+class Input(ABC):
+	
+	#@timeit
+	@abstractmethod
+	def getImages(self):
+		pass
 
 def wait_for_frame(capture):
 	# TODO : Put a timeout
@@ -27,6 +37,7 @@ class LocalFSInput(Input):
 
 	def getImages(self):
 		if os.path.isdir(self.path):
+			print("... folder detected, reading all images in it")
 			images = []
 			for r, d, f in os.walk(self.path):
 				for filename in f:
@@ -34,4 +45,5 @@ class LocalFSInput(Input):
 						images.append(cv2.imread((self.path)))
 			return images
 		else:
+			print("... reading image from " + self.path)
 			return [cv2.imread((self.path))]
