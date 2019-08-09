@@ -27,5 +27,4 @@ class ImageOutput(Output):
 
 class ConsoleOutput(Output):
 	def outputResult(self, result: ImageResult):
-		# TODO : Improve ImageResult printing
 		print(result)

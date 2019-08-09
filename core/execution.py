@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod, abstractproperty
 import numpy as np
 
 from nptyping import Array
-from typing import Dict
+from typing import Dict, List
 
 from core.results import ImageResult
 from core.input_processor import WebCamInput, LocalFSInput
@@ -17,13 +17,14 @@ class CommandExecution():
 		self.input_key = input_key
 		self.command_key = command_key
 		self.output_key = output_key
+		self.all_commands: List[str] = utils.get_commands_names_list()
 
 	def execute(self):
 		input = self.resolve_input()
 		try:
 			command = utils.get_commands_dict()[self.command_key]
 		except KeyError:
-			print("Provided command "+self.command_key+" is not implemented. Implemented commands ->  "+str(utils.get_commands_names_list()))
+			print("Provided command "+self.command_key+" is not implemented. Implemented commands ->  "+str(self.all_commands))
 			sys.exit(1)
 
 		output = self.resolve_output()

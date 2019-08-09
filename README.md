@@ -20,15 +20,13 @@ You will need:
 And some pip dependencies :
 	
 	cd [project_folder]
-	pipenv install pytest
-	pipenv install numpy
-	pipenv install cv2
-	pìpenv install nptyping
+	pipenv install --ignore-pipfile
+
 
 ### Usage
 
-	pipenv python cv-cli.py --command gender-detection \
-		--input $(pwd)/data/images/woman_frontal.jpg
+	pipenv run python cv_cli.py --command gender-detection \
+		--input $(pwd)/data/images/people/woman_frontal.jpg --output image
 
 
 ## Developing 
@@ -41,8 +39,19 @@ Execute tests with the following command from root project dir.
 
 Pytest will execute all tests inside modules matching the regular expression [Tt]est[-_]*.
 
+If coverage package is installed you can get the report result
+
+	pipenv run python -m coverage run --source $(pwd) cv_cli.py --command gender-detection --input $(pwd)/data/images/people/woman_frontal.jpg --output image
+	pipenv run python -m coverage report
+
+
 ### Git flow
 
 
 
 ### Additional resources
+
+- pip -> 
+- pipenv -> 
+- opencv ->
+- 
