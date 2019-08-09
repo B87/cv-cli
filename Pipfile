@@ -9,7 +9,6 @@ coverage = "*"
 
 [packages]
 numpy = "*"
-cv2 = "*"
 opencv-python = "*"
 nptyping = "*"
 
