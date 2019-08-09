@@ -13,8 +13,6 @@ class GenderDetection(BaseCommand):
 	gender_list = ['male', 'female']
 	padding = 20
 
-	face_cascade = cv2.CascadeClassifier("data/models/haarcascade_frontalface_alt.xml")
-
 	gender_net = cv2.dnn.readNet('data/models/gender_net.caffemodel', 'data/models/deploy_gender.prototxt')
 	face_net = cv2.dnn.readNet('data/models/opencv_face_detector_uint8.pb', 'data/models/opencv_face_detector.pbtxt')
 
@@ -25,7 +23,7 @@ class GenderDetection(BaseCommand):
 		image_boxes = []
 		frame_face, bboxes = self.getFaceBox(image)
 		if not bboxes:
-			print("No face Detected, Checking next frame")
+			print("... no face detected")
 
 		for bbox in bboxes:
 			face = image[max(0, bbox[1]-self.padding) : min( bbox[3]+self.padding, image.shape[0]-1 ), max( 0, bbox[0]- self.padding ) : min( bbox[2]+self.padding, image.shape[1]-1 )]
@@ -34,13 +32,10 @@ class GenderDetection(BaseCommand):
 			gender_preds = self.gender_net.forward()
 			gender = self.gender_list[gender_preds[0].argmax()]
 
-			image_boxes.append(ImageBox(bbox[0], bbox[1], bbox[2], bbox[3], [gender]))
+			image_boxes.append(ImageBox(bbox[0], bbox[1], bbox[2], bbox[3], gender))
 
-			print("Gender : {}, conf = {:.3f}".format(gender, gender_preds[0].max()))
-			
-			label = "{}".format(gender)
-			cv2.putText(frame_face, label, (bbox[0], bbox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2, cv2.LINE_AA)
-			cv2.imshow("Age Gender Demo", frame_face)
+			print("... gender : {}, conf = {:.3f}".format(gender, gender_preds[0].max()))
+
 		return ImageResult(image, image_boxes)
 
 	def getFaceBox(self, frame, conf_threshold=0.7):
@@ -59,26 +54,5 @@ class GenderDetection(BaseCommand):
 				x2 = int(detections[0, 0, i, 5] * frameWidth)
 				y2 = int(detections[0, 0, i, 6] * frameHeight)
 				bboxes.append([x1, y1, x2, y2])
-				cv2.rectangle(frameOpencvDnn, (x1, y1), (x2, y2), (0, 255, 0), int(round(frameHeight/150)), 8)
+
 		return frameOpencvDnn, bboxes
-		# Convert from rgb to grey scaled image		
-		#gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-		#faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-		#if(len(faces)>0):
-		#	print("Found %s faces" % (str(len(faces))))
-
-		#for (x, y, w, h ) in faces:
-			# Get Face 
-			#face_img = image[y:y+h, h:h+w].copy()
-			#blob = cv2.dnn.blobFromImage(face_img, 1, (227, 227), MODEL_MEAN_VALUES, swapRB=False)
-
-			#Predict Gender
-			#gender_net.setInput(blob)
-			#gender_preds = gender_net.forward()
-			#gender = gender_list[gender_preds[0].argmax()]
-			#print("Gender : " + gender)
-
-			# crop image
-			#crop_img = image[y:y+h, x:x+w].copy()
-
-	

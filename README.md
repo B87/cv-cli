@@ -4,19 +4,20 @@ cv-cli is a project made to encapsulate computer vision algorithms in a simple c
 
 ### Roadmap
 
-- first command: gender-detector. Tries to identify the gender of a person if present in a input image from file system 
-- add custom training functionallity
+- Improve gender detection accuracy
+- Add custom training functionallity
 
 ### Install it in your system
 
-There is no installation procedure at this moment. Just clone the repo and execute the cli.py script.
+There is no installation script at this moment. Just clone the repo and execute the cli.py script.
 
-Your will need:
+You will need:
 
-- python3
+- python (3.x)
+- pip
 - pipenv
 
-And some pip dependencies, execute pipenv install 
+And some pip dependencies :
 	
 	cd [project_folder]
 	pipenv install pytest

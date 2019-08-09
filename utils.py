@@ -2,6 +2,8 @@ import time
 from commands.base import BaseCommand
 from typing import Dict, List
 
+import commands.gender_detection
+
 """
 	Decorator to print the duration time of a function execution
 """

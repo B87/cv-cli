@@ -1,5 +1,6 @@
 import cv2
 import os
+import sys
 
 from abc import ABC, abstractmethod
 
@@ -36,14 +37,18 @@ class LocalFSInput(Input):
 		self.path = path 
 
 	def getImages(self):
-		if os.path.isdir(self.path):
-			print("... folder detected, reading all images in it")
-			images = []
-			for r, d, f in os.walk(self.path):
-				for filename in f:
-					if filename.endswith('.' + 'jpg'):
-						images.append(cv2.imread((self.path)))
-			return images
+		if(os.path.exists(self.path)):
+			if os.path.isdir(self.path):
+				print("... folder detected, reading all images in it")
+				images = []
+				for r, d, f in os.walk(self.path):
+					for filename in f:
+						if filename.endswith('.' + 'jpg'):
+							images.append(cv2.imread((self.path)))
+				return images
+			else:
+				print("... reading image from " + self.path)
+				return [cv2.imread((self.path))]
 		else:
-			print("... reading image from " + self.path)
-			return [cv2.imread((self.path))]
+			print("Privided input path "+self.path+" does not exist")
+			sys.exit(1)
